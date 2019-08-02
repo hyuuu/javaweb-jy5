@@ -17,10 +17,12 @@ import java.util.List;
  * @description: 数据层
  */
 public class UsersDao {
-    public List<User> selectAll(int page, int size) {
+
+    private QueryRunner qr = PoolUtil.getQR();
+
+    public List<User> selectAll(Integer page, Integer size) {
         String sql = "select * from users limit ?,?";
         List<User> uli = null;
-        QueryRunner qr = PoolUtil.getQR();
         try {
             uli = qr.query(sql, new BeanListHandler<User>(User.class),page,size);
         } catch (SQLException e) {
@@ -32,12 +34,34 @@ public class UsersDao {
     public User selectOne(String username, String password) {
         String sql = "select * from users where u_name = ? and u_pwd = ?";
         User u = null;
-        QueryRunner qr = PoolUtil.getQR();
         try {
             u = qr.query(sql, new BeanHandler<User>(User.class),username,password);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return u;
+    }
+
+    public User selectByID(Integer uid) {
+        String sql = "select * from users where u_id=?";
+        User user = null;
+        try {
+            user = qr.query(sql, new BeanHandler<User>(User.class), uid);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+    public Integer updateByID(Integer uid) {
+        String sql = "update users set u_stats=1 where u_id=?";
+        Integer row = 0;
+        try {
+            //这里如果出现SQL语法错误，应该怎么处理？往外抛？！
+            row = qr.update(sql, uid);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return row;
     }
 }

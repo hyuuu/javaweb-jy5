@@ -12,11 +12,9 @@ import org.apache.commons.dbutils.QueryRunner;
  */
 public class PoolUtil {
     private static final ComboPooledDataSource cs = new ComboPooledDataSource();
+    private static final QueryRunner qr = new QueryRunner(cs);
 
-    public static QueryRunner getQR(){
-        QueryRunner queryRunner = new QueryRunner(cs);
-        return queryRunner;
-    }
+    public static QueryRunner getQR(){ return qr; }
     public static ComboPooledDataSource getCS(){
         return cs;
     }

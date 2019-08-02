@@ -36,27 +36,24 @@ public class UsersController extends HttpServlet {
             case "login":
                 rc = loginDo(request);
                 break;
+            case "disable":
+                rc = disableUserDo(request);
+                break;
         }
         //5、返回响应数据
         response.getWriter().write(rc.toString());
     }
 
+    private ResponseCode disableUserDo(HttpServletRequest request) {
+        ResponseCode rc = new ResponseCode();
+        //禁用用户ID
+        String u_id = request.getParameter("u_id");
+        rc = us.updateByID(u_id);
+        return rc;
+    }
+
     private ResponseCode listDo(HttpServletRequest request) {
         ResponseCode rc = new ResponseCode();
-        //获取session
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        //判断session里有没有user，若有，验证其权限
-        if (user == null){
-            rc.setStatus("3");
-            rc.setMsg("未登录！");
-            return rc;
-        }
-        if (user.getU_type() != 1){
-            rc.setStatus("3");
-            rc.setMsg("没有权限！");
-            return rc;
-        }
         String pageNum = request.getParameter("pageNum");   //页码
         String pageSize = request.getParameter("pageSize"); //一页数据量
         rc = us.selectAll(pageNum,pageSize);

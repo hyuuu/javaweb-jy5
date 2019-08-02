@@ -22,4 +22,11 @@ public class Demo {
             System.out.println(user);
         }
     }
+    @Test
+    public void m2(){
+        UsersDao ud = new UsersDao();
+
+        Integer row = ud.updateByID(3);
+        System.out.println(row);
+    }
 }
