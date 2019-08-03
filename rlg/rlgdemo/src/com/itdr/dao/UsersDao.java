@@ -32,7 +32,7 @@ public class UsersDao {
     }
 
     public User selectOne(String username, String password) {
-        String sql = "select * from users where u_name = ? and u_pwd = ?";
+        String sql = "select * from users where username = ? and password = ?";
         User u = null;
         try {
             u = qr.query(sql, new BeanHandler<User>(User.class),username,password);
@@ -43,7 +43,7 @@ public class UsersDao {
     }
 
     public User selectByID(Integer uid) {
-        String sql = "select * from users where u_id=?";
+        String sql = "select * from users where id=?";
         User user = null;
         try {
             user = qr.query(sql, new BeanHandler<User>(User.class), uid);
@@ -54,10 +54,9 @@ public class UsersDao {
     }
 
     public Integer updateByID(Integer uid) {
-        String sql = "update users set u_stats=1 where u_id=?";
+        String sql = "update users set status=1 where id=?";
         Integer row = 0;
         try {
-            //这里如果出现SQL语法错误，应该怎么处理？往外抛？！
             row = qr.update(sql, uid);
         } catch (SQLException e) {
             e.printStackTrace();

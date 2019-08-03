@@ -73,7 +73,7 @@ public class UsersService {
             return rc;
         }
         //5、如果这个人权限不足（非管理员）
-        if (u.getU_type() != 1) {
+        if (u.getRole() != 1) {
             rc.setStatus(GetPropertiesUtil.getValue("LOGIN_DENIED_CODE"));
             rc.setMsg(GetPropertiesUtil.getValue("LOGIN_DENIED_MSG"));
             return rc;
@@ -106,7 +106,7 @@ public class UsersService {
             return rc;
         }
         //5.如果这个人已经被禁用
-        if (user.getU_stats() == 1){
+        if (user.getStatus() == 1){
             rc.setStatus(GetPropertiesUtil.getValue("USER_STATS_CODE"));
             rc.setMsg(GetPropertiesUtil.getValue("USER_STATS_MSG"));
             return rc;

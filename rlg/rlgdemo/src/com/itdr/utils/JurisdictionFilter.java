@@ -42,7 +42,7 @@ public class JurisdictionFilter implements Filter {
             return;
         }
         //权限不足状态
-        if (user.getU_type() != 1){
+        if (user.getRole() != 1){
             ResponseCode rc = new ResponseCode();
             rc.setStatus(GetPropertiesUtil.getValue("LOGIN_DENIED_CODE"));
             rc.setMsg(GetPropertiesUtil.getValue("LOGIN_DENIED_MSG"));

@@ -8,70 +8,120 @@ package com.itdr.pojo;
  * @description:
  */
 public class User {
-    private Integer u_id;
-    private String u_name;
-    private String u_pwd;
-    private String u_tel;
-    private Integer u_type = 0;
-    private Integer u_stats = 0;
+    private Integer id;
+    private String username;
+    private String password;
+    private String email;
+    private String phone;
+    private String question;
+    private String answer;
+    private Integer role = 0;
+    private Integer status = 0;
+    private String createTime;
+    private String updateTime;
 
-    public Integer getU_id() {
-        return u_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setU_id(Integer u_id) {
-        this.u_id = u_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getU_name() {
-        return u_name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setU_name(String u_name) {
-        this.u_name = u_name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getU_pwd() {
-        return u_pwd;
+    public String getPassword() {
+        return password;
     }
 
-    public void setU_pwd(String u_pwd) {
-        this.u_pwd = u_pwd;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getU_tel() {
-        return u_tel;
+    public String getEmail() {
+        return email;
     }
 
-    public void setU_tel(String u_tel) {
-        this.u_tel = u_tel;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public Integer getU_type() {
-        return u_type;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setU_type(Integer u_type) {
-        this.u_type = u_type;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public Integer getU_stats() {
-        return u_stats;
+    public String getQuestion() {
+        return question;
     }
 
-    public void setU_stats(Integer u_stats) {
-        this.u_stats = u_stats;
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    public Integer getRole() {
+        return role;
+    }
+
+    public void setRole(Integer role) {
+        this.role = role;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "u_id=" + u_id +
-                ", u_name='" + u_name + '\'' +
-                ", u_pwd='" + u_pwd + '\'' +
-                ", u_tel='" + u_tel + '\'' +
-                ", u_type=" + u_type +
-                ", u_stats=" + u_stats +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", question='" + question + '\'' +
+                ", answer='" + answer + '\'' +
+                ", role=" + role +
+                ", status=" + status +
+                ", createTime='" + createTime + '\'' +
+                ", updateTime='" + updateTime + '\'' +
                 '}';
     }
 }
