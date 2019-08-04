@@ -29,4 +29,11 @@ public class Demo {
             System.out.println(res.getString(2));
         }
     }
+
+    @Test
+    public void m2(){
+        String s = "/set_sale_status.do";
+        String path = PathUtil.getPath(s);
+        System.out.println(path);
+    }
 }

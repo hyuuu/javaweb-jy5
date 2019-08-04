@@ -53,4 +53,91 @@ public class ProductsService {
         rc.setData(pli);
         return rc;
     }
+
+    public ResponseCode selectByName(String productName) {
+        ResponseCode rc = new ResponseCode();
+        List<Product> p = pd.selectByName(productName);
+        if (p == null){
+            rc.setStatus(GetPropertiesUtil.getValue("SELECT_ERROR_CODE"));
+            rc.setMsg(GetPropertiesUtil.getValue("SELECT_ERROR_MSG"));
+            return rc;
+        }
+        if (p.size() == 0){
+            rc.setStatus(GetPropertiesUtil.getValue("SELECT_NULL_CODE"));
+            rc.setMsg(GetPropertiesUtil.getValue("SELECT_NULL_MSG"));
+            return rc;
+        }
+        rc.setStatus(GetPropertiesUtil.getValue("SELECT_SUCCESSFUL_CODE"));
+        rc.setData(p);
+        return rc;
+    }
+
+    public ResponseCode selectById(String productId) {
+        ResponseCode rc = new ResponseCode();
+        Integer id = null;
+        try {
+            id = Integer.parseInt(productId);
+        }catch (Exception e){
+            rc.setStatus(GetPropertiesUtil.getValue("PARAMETER_ILLICIT_CODE"));
+            rc.setMsg(GetPropertiesUtil.getValue("PARAMETER_ILLICIT_MSG"));
+            return rc;
+        }
+        Product p = pd.selectById(id);
+        if (p == null){
+            rc.setStatus(GetPropertiesUtil.getValue("SELECT_NULL_CODE"));
+            rc.setMsg(GetPropertiesUtil.getValue("SELECT_NULL_MSG"));
+            return rc;
+        }
+        rc.setStatus(GetPropertiesUtil.getValue("SELECT_SUCCESSFUL_CODE"));
+        rc.setData(p);
+        return rc;
+    }
+
+    public ResponseCode search(String productName, String productId) {
+        ResponseCode rc = new ResponseCode();
+        if (productName != null && !productName.equals("")){
+            rc = selectByName(productName);
+            return rc;
+        }
+        if (productId != null && !productId.equals("")){
+            rc = selectById(productId);
+            return rc;
+        }
+        rc = selectAll("1","10");
+        return rc;
+    }
+
+    public ResponseCode set_sale_status(String productId, String status) {
+        ResponseCode rc = new ResponseCode();
+        Integer id = null;
+        Integer stat = null;
+        try {
+            id = Integer.parseInt(productId);
+            stat = Integer.parseInt(status);
+        }catch (Exception e){
+            rc.setStatus(GetPropertiesUtil.getValue("PARAMETER_ILLICIT_CODE"));
+            rc.setMsg(GetPropertiesUtil.getValue("PARAMETER_ILLICIT_MSG"));
+            return rc;
+        }
+        Product p = pd.selectById(id);
+        if (p == null){
+            rc.setStatus(GetPropertiesUtil.getValue("SELECT_NULL_CODE"));
+            rc.setMsg(GetPropertiesUtil.getValue("SELECT_NULL_MSG"));
+            return rc;
+        }
+        if (p.getStatus() == 1){
+            rc.setStatus(GetPropertiesUtil.getValue("USER_STATS_CODE"));
+            rc.setMsg(GetPropertiesUtil.getValue("USER_STATS_MSG"));
+            return rc;
+        }
+        Integer row = pd.updateStatusById(id,stat);
+        if (row == 0){
+            rc.setStatus(GetPropertiesUtil.getValue("UPDATE_ERROR_CODE"));
+            rc.setMsg(GetPropertiesUtil.getValue("UPDATE_ERROR_MSG"));
+            return rc;
+        }
+        rc.setStatus(GetPropertiesUtil.getValue("UPDATE_SUCCESSFUL_CODE"));
+        rc.setData(GetPropertiesUtil.getValue("UPDATE_SUCCESSFUL_DATA"));
+        return rc;
+    }
 }

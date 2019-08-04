@@ -27,20 +27,52 @@ public class ProductsController extends HttpServlet {
             case "list":
                 rc = listDo(request);
                 break;
-            case "login":
+            case "search":
+                rc = searchDo(request);
                 break;
-            case "disable":
+            case "detail":
+                rc = detailDo(request);
+                break;
+            case "set_sale_status":
+                rc = set_sale_statusDo(request);
                 break;
         }
         //5、返回响应数据
         response.getWriter().write(rc.toString());
     }
 
+    private ResponseCode set_sale_statusDo(HttpServletRequest request) {
+        ResponseCode rc = new ResponseCode();
+        String productId = request.getParameter("productId");
+        String status = request.getParameter("status");
+        rc = ps.set_sale_status(productId,status);
+        return rc;
+    }
+
+    //详情
+    private ResponseCode detailDo(HttpServletRequest request) {
+        ResponseCode rc = new ResponseCode();
+        String productId = request.getParameter("productId");
+        rc = ps.selectById(productId);
+        return rc;
+    }
+
+    //产品搜索
+    private ResponseCode searchDo(HttpServletRequest request) {
+        ResponseCode rc = new ResponseCode();
+        String productName = request.getParameter("productName");
+        String productId = request.getParameter("productId");
+        rc = ps.search(productName,productId);
+        return rc;
+
+    }
+
+    //产品list
     private ResponseCode listDo(HttpServletRequest request) {
         ResponseCode rc = new ResponseCode();
         String pageNum = request.getParameter("pageNum");   //页码
         String pageSize = request.getParameter("pageSize"); //一页数据量
-        rc = ps.selectAll(pageNum,pageSize);
+        rc = ps.selectAll(pageNum, pageSize);
         return rc;
     }
 }
