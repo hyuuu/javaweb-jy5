@@ -1,5 +1,7 @@
 package com.itdr.common;
 
+import com.itdr.utils.GetPropertiesUtil;
+
 /**
  * @ClassName: ResponseCode
  * @author: heyuu
@@ -43,5 +45,24 @@ public class ResponseCode<T> {
                 ", data=" + data +
                 ", msg='" + msg + '\'' +
                 '}';
+    }
+
+    public static <T> ResponseCode success(String status, T data){
+        ResponseCode rc = new ResponseCode();
+        rc.setStatus(status);
+        rc.setData(data);
+        return rc;
+    }
+    public static <T> ResponseCode success(T data){
+        ResponseCode rc = new ResponseCode();
+        rc.setStatus(GetPropertiesUtil.getValue("ResponseCode_SUCCESS"));
+        rc.setData(data);
+        return rc;
+    }
+    public static <T> ResponseCode fail(String status, String msg){
+        ResponseCode rc = new ResponseCode();
+        rc.setStatus(status);
+        rc.setMsg(msg);
+        return rc;
     }
 }

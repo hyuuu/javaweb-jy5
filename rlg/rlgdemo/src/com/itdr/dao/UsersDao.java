@@ -2,6 +2,7 @@ package com.itdr.dao;
 
 import com.itdr.pojo.User;
 import com.itdr.utils.PoolUtil;
+import com.itdr.utils.TimeStampUtil;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
@@ -42,22 +43,33 @@ public class UsersDao {
         return u;
     }
 
-    public User selectByID(Integer uid) {
+    public User selectByID(Integer id) {
         String sql = "select * from users where id=?";
         User user = null;
         try {
-            user = qr.query(sql, new BeanHandler<User>(User.class), uid);
+            user = qr.query(sql, new BeanHandler<User>(User.class), id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return user;
     }
 
-    public Integer updateByID(Integer uid) {
-        String sql = "update users set status=1 where id=?";
+    public Integer setStatus1ByID(Integer id) {
+        String sql = "update users set status=1, updateTime=? where id=?";
         Integer row = 0;
         try {
-            row = qr.update(sql, uid);
+            row = qr.update(sql, TimeStampUtil.getTimestamp(),id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    public Integer setStatus0ByID(Integer id) {
+        String sql = "update users set status=0, updateTime=? where id=?";
+        Integer row = 0;
+        try {
+            row = qr.update(sql, TimeStampUtil.getTimestamp(),id);
         } catch (SQLException e) {
             e.printStackTrace();
         }

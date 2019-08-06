@@ -36,19 +36,30 @@ public class UsersController extends HttpServlet {
             case "login":
                 rc = loginDo(request);
                 break;
-            case "disable":
+            case "disableUser":
                 rc = disableUserDo(request);
+                break;
+            case "enableUser":
+                rc = enableUserDo(request);
                 break;
         }
         //5、返回响应数据
         response.getWriter().write(rc.toString());
     }
 
+    private ResponseCode enableUserDo(HttpServletRequest request) {
+        ResponseCode rc = new ResponseCode();
+        //禁用用户ID
+        String id = request.getParameter("id");
+        rc = us.enableUserByID(id);
+        return rc;
+    }
+
     private ResponseCode disableUserDo(HttpServletRequest request) {
         ResponseCode rc = new ResponseCode();
         //禁用用户ID
-        String u_id = request.getParameter("u_id");
-        rc = us.updateByID(u_id);
+        String id = request.getParameter("id");
+        rc = us.disableUserByID(id);
         return rc;
     }
 

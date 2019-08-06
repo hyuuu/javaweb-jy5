@@ -36,7 +36,6 @@ public class GetPropertiesUtil {
         String value = p.getProperty(key);
         return value;
     }
-
     //测试
     public static void main(String[] args) {
         System.out.println(GetPropertiesUtil.getValue("LOGIN_ERROR_MSG"));

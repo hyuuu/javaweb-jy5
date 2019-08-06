@@ -22,7 +22,7 @@ public class ProductsDao {
     private QueryRunner qr = PoolUtil.getQR();
 
     public List<Product> selectAll(Integer page, Integer size) {
-        String sql = "select * from products limit ?,?";
+        String sql = "select id,categoryId,name,subtitle,mainImage,status,price from products limit ?,?";
         List<Product> li = null;
         try {
             li = qr.query(sql, new BeanListHandler<Product>(Product.class),page,size);
@@ -32,7 +32,7 @@ public class ProductsDao {
         return li;
     }
 
-    public List<Product> selectByName(String productName) {
+    public List<Product> selectLikeName(String productName) {
         String sql = "select * from products where name like ?";
         productName = "%"+productName+"%";
         List<Product> product = null;

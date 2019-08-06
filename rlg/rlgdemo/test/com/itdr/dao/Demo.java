@@ -29,10 +29,12 @@ public class Demo {
     @Test
     public void m2(){
         Date date = new Date();
-//        Timestamp timestamp = new Timestamp(date.getTime());
-//        System.out.println(timestamp);
+        Timestamp timestamp = new Timestamp(date.getTime());
 
-        long ts = System.currentTimeMillis();
+        System.out.println(date.getTime());
+        System.out.println(timestamp);
+
+        long ts = date.getTime();
         System.out.println("-----ts-----"+ts);
 
         String string = ts+"";

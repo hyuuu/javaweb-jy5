@@ -14,12 +14,13 @@ import java.util.List;
  * @version: JDK 1.8
  * @description:
  */
+@SuppressWarnings({"unchecked"})
 public class ProductsService {
     private ProductsDao pd = new ProductsDao();
 
     public ResponseCode selectAll(String pageNum, String pageSize) {
         //创建一个统一返回对象
-        ResponseCode<Object> rc = new ResponseCode<>();
+        ResponseCode<Object> rc = null;
         //1、页码和一页数据量非空判断，若空则初始化
         if (pageNum==null || pageNum.equals("")){pageNum = "1";}
         if (pageSize==null || pageSize.equals("")){pageSize = "10";}
@@ -30,73 +31,63 @@ public class ProductsService {
             page = Integer.parseInt(pageNum);
             size = Integer.parseInt(pageSize);
         }catch (Exception e){
-            rc.setStatus(GetPropertiesUtil.getValue("PARAMETER_ILLICIT_CODE"));
-            rc.setMsg(GetPropertiesUtil.getValue("PARAMETER_ILLICIT_MSG"));
+            rc = ResponseCode.fail(GetPropertiesUtil.getValue("PARAMETER_ILLICIT_CODE"), GetPropertiesUtil.getValue("PARAMETER_ILLICIT_MSG"));
             return rc;
         }
         //3、查数据
         List<Product> pli = pd.selectAll(page,size);
         //4、查询失败/出错
         if (pli == null){
-            rc.setStatus(GetPropertiesUtil.getValue("SELECT_ERROR_CODE"));
-            rc.setMsg(GetPropertiesUtil.getValue("SELECT_ERROR_MSG"));
+            rc = ResponseCode.fail(GetPropertiesUtil.getValue("SELECT_ERROR_CODE"), GetPropertiesUtil.getValue("SELECT_ERROR_MSG"));
             return rc;
         }
         //5、查询结果集没有数据
         if (pli.size() == 0){
-            rc.setStatus(GetPropertiesUtil.getValue("SELECT_NULL_CODE"));
-            rc.setMsg(GetPropertiesUtil.getValue("SELECT_NULL_MSG"));
+            rc = ResponseCode.fail(GetPropertiesUtil.getValue("SELECT_NULL_CODE"), GetPropertiesUtil.getValue("SELECT_NULL_MSG"));
             return rc;
         }
         //6、查询结果集有数据
-        rc.setStatus(GetPropertiesUtil.getValue("SELECT_SUCCESSFUL_CODE"));
-        rc.setData(pli);
+        rc = ResponseCode.success(pli);
         return rc;
     }
 
-    public ResponseCode selectByName(String productName) {
-        ResponseCode rc = new ResponseCode();
-        List<Product> p = pd.selectByName(productName);
+    public ResponseCode selectLikeName(String productName) {
+        ResponseCode rc = null;
+        List<Product> p = pd.selectLikeName(productName);
         if (p == null){
-            rc.setStatus(GetPropertiesUtil.getValue("SELECT_ERROR_CODE"));
-            rc.setMsg(GetPropertiesUtil.getValue("SELECT_ERROR_MSG"));
+            rc = ResponseCode.fail(GetPropertiesUtil.getValue("SELECT_ERROR_CODE"),GetPropertiesUtil.getValue("SELECT_ERROR_MSG"));
             return rc;
         }
         if (p.size() == 0){
-            rc.setStatus(GetPropertiesUtil.getValue("SELECT_NULL_CODE"));
-            rc.setMsg(GetPropertiesUtil.getValue("SELECT_NULL_MSG"));
+            rc = ResponseCode.fail(GetPropertiesUtil.getValue("SELECT_NULL_CODE"),GetPropertiesUtil.getValue("SELECT_NULL_MSG"));
             return rc;
         }
-        rc.setStatus(GetPropertiesUtil.getValue("SELECT_SUCCESSFUL_CODE"));
-        rc.setData(p);
+        rc = ResponseCode.success(p);
         return rc;
     }
 
     public ResponseCode selectById(String productId) {
-        ResponseCode rc = new ResponseCode();
+        ResponseCode rc = null;
         Integer id = null;
         try {
             id = Integer.parseInt(productId);
         }catch (Exception e){
-            rc.setStatus(GetPropertiesUtil.getValue("PARAMETER_ILLICIT_CODE"));
-            rc.setMsg(GetPropertiesUtil.getValue("PARAMETER_ILLICIT_MSG"));
+            rc = ResponseCode.fail(GetPropertiesUtil.getValue("PARAMETER_ILLICIT_CODE"), GetPropertiesUtil.getValue("PARAMETER_ILLICIT_MSG"));
             return rc;
         }
         Product p = pd.selectById(id);
         if (p == null){
-            rc.setStatus(GetPropertiesUtil.getValue("SELECT_NULL_CODE"));
-            rc.setMsg(GetPropertiesUtil.getValue("SELECT_NULL_MSG"));
+            rc = ResponseCode.fail(GetPropertiesUtil.getValue("SELECT_NULL_CODE"),GetPropertiesUtil.getValue("SELECT_NULL_MSG"));
             return rc;
         }
-        rc.setStatus(GetPropertiesUtil.getValue("SELECT_SUCCESSFUL_CODE"));
-        rc.setData(p);
+        rc = ResponseCode.success(p);
         return rc;
     }
 
     public ResponseCode search(String productName, String productId) {
-        ResponseCode rc = new ResponseCode();
+        ResponseCode rc = null;
         if (productName != null && !productName.equals("")){
-            rc = selectByName(productName);
+            rc = selectLikeName(productName);
             return rc;
         }
         if (productId != null && !productId.equals("")){
@@ -108,36 +99,27 @@ public class ProductsService {
     }
 
     public ResponseCode set_sale_status(String productId, String status) {
-        ResponseCode rc = new ResponseCode();
+        ResponseCode rc = null;
         Integer id = null;
         Integer stat = null;
         try {
             id = Integer.parseInt(productId);
             stat = Integer.parseInt(status);
         }catch (Exception e){
-            rc.setStatus(GetPropertiesUtil.getValue("PARAMETER_ILLICIT_CODE"));
-            rc.setMsg(GetPropertiesUtil.getValue("PARAMETER_ILLICIT_MSG"));
+            rc = ResponseCode.fail(GetPropertiesUtil.getValue("PARAMETER_ILLICIT_CODE"), GetPropertiesUtil.getValue("PARAMETER_ILLICIT_MSG"));
             return rc;
         }
         Product p = pd.selectById(id);
         if (p == null){
-            rc.setStatus(GetPropertiesUtil.getValue("SELECT_NULL_CODE"));
-            rc.setMsg(GetPropertiesUtil.getValue("SELECT_NULL_MSG"));
-            return rc;
-        }
-        if (p.getStatus() == 1){
-            rc.setStatus(GetPropertiesUtil.getValue("USER_STATS_CODE"));
-            rc.setMsg(GetPropertiesUtil.getValue("USER_STATS_MSG"));
+            rc = ResponseCode.fail(GetPropertiesUtil.getValue("SELECT_NULL_CODE"),GetPropertiesUtil.getValue("SELECT_NULL_MSG"));
             return rc;
         }
         Integer row = pd.updateStatusById(id,stat);
         if (row == 0){
-            rc.setStatus(GetPropertiesUtil.getValue("UPDATE_ERROR_CODE"));
-            rc.setMsg(GetPropertiesUtil.getValue("UPDATE_ERROR_MSG"));
+            rc = ResponseCode.fail(GetPropertiesUtil.getValue("UPDATE_ERROR_CODE"),GetPropertiesUtil.getValue("UPDATE_ERROR_MSG"));
             return rc;
         }
-        rc.setStatus(GetPropertiesUtil.getValue("UPDATE_SUCCESSFUL_CODE"));
-        rc.setData(GetPropertiesUtil.getValue("UPDATE_SUCCESSFUL_DATA"));
+        rc = ResponseCode.success(GetPropertiesUtil.getValue("UPDATE_SUCCESSFUL_CODE"),GetPropertiesUtil.getValue("UPDATE_SUCCESSFUL_DATA"));
         return rc;
     }
 }

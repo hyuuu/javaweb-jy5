@@ -41,6 +41,7 @@ public class ProductsController extends HttpServlet {
         response.getWriter().write(rc.toString());
     }
 
+    //产品上下架
     private ResponseCode set_sale_statusDo(HttpServletRequest request) {
         ResponseCode rc = new ResponseCode();
         String productId = request.getParameter("productId");
