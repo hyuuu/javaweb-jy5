@@ -5,6 +5,7 @@ import com.itdr.dao.ProductsDao;
 import com.itdr.pojo.Product;
 import com.itdr.utils.GetPropertiesUtil;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -120,6 +121,48 @@ public class ProductsService {
             return rc;
         }
         rc = ResponseCode.success(GetPropertiesUtil.getValue("UPDATE_SUCCESSFUL_CODE"),GetPropertiesUtil.getValue("UPDATE_SUCCESSFUL_DATA"));
+        return rc;
+    }
+
+    public ResponseCode save(String categoryId, String name, String subtitle, String mainImage, String subImages, String detail, String price, String stock, String status, String id) {
+        ResponseCode rc = null;
+        Integer c_id = null;
+        BigDecimal p_price = null;
+        Integer p_status = null;
+        Integer p_id = null;
+        try {
+            c_id = Integer.parseInt(categoryId);
+            p_price = new BigDecimal(price);
+            p_status = Integer.parseInt(status);
+            p_id = Integer.parseInt(id);
+        }catch (Exception e){
+            rc = ResponseCode.fail(GetPropertiesUtil.getValue("PARAMETER_ILLICIT_CODE"), GetPropertiesUtil.getValue("PARAMETER_ILLICIT_MSG"));
+            return rc;
+        }
+        if (name == null || name.equals("") ||
+                subtitle == null || subtitle.equals("") ||
+                mainImage == null || mainImage.equals("") ||
+                subImages == null || subImages.equals("") ||
+                detail == null || detail.equals("") ||
+                stock == null || stock.equals("")){
+            rc = ResponseCode.fail(GetPropertiesUtil.getValue("INSERT_NULLPARAMETER_CODE"),GetPropertiesUtil.getValue("INSERT_NULLPARAMETER_MSG"));
+        }
+        Product p = pd.selectById(p_id);
+        Integer row = null;
+        if (p == null){
+            row = pd.insertAll(c_id,name,subtitle,mainImage,subImages,detail,p_price,stock,p_status);
+            if (row != 0){
+                rc = ResponseCode.success(GetPropertiesUtil.getValue("INSERT_SUCCESSFUL_DATA"));
+                return rc;
+            }
+        }else {
+            row = pd.updateAll(c_id,name,subtitle,mainImage,subImages,detail,p_price,stock,p_status,p_id);
+            if (row != 0){
+                rc = ResponseCode.success(GetPropertiesUtil.getValue("UPDATE_SUCCESSFUL_DATA"));
+                return rc;
+            }
+        }
+        rc = ResponseCode.fail(GetPropertiesUtil.getValue("UPDATE_ERROR_CODE"),GetPropertiesUtil.getValue("UPDATE_ERROR_MSG"));
         return rc;
     }
 }

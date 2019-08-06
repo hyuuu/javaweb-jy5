@@ -29,9 +29,31 @@ public class CategoryController extends HttpServlet {
             case "add_category":
                 rc = add_categoryDo(request);
                 break;
+            case "set_category_name":
+                rc = set_category_nameDo(request);
+                break;
+            case "get_deep_category":
+                rc = get_deep_categoryDo(request);
+                break;
         }
         //5、返回响应数据
         response.getWriter().write(rc.toString());
+    }
+
+    private ResponseCode get_deep_categoryDo(HttpServletRequest request) {
+        ResponseCode rc = new ResponseCode();
+        String categoryId = request.getParameter("categoryId");
+        rc = cs.get_deep_category(categoryId);
+        return rc;
+    }
+
+    //修改品类名字
+    private ResponseCode set_category_nameDo(HttpServletRequest request) {
+        ResponseCode rc = new ResponseCode();
+        String categoryId = request.getParameter("categoryId");
+        String categoryName = request.getParameter("categoryName");
+        rc = cs.set_category_name(categoryId,categoryName);
+        return rc;
     }
 
     //增加节点

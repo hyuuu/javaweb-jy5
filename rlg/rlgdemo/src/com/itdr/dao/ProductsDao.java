@@ -4,10 +4,12 @@ import com.itdr.common.ResponseCode;
 import com.itdr.pojo.Product;
 import com.itdr.pojo.User;
 import com.itdr.utils.PoolUtil;
+import com.itdr.utils.TimeStampUtil;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -60,6 +62,31 @@ public class ProductsDao {
         Integer row = null;
         try {
             row = qr.update(sql,status,id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    public Integer insertAll(Integer categoryId, String name, String subtitle, String mainImage, String subImages,
+                             String detail, BigDecimal price, String stock, Integer status) {
+        String sql = "insert into products values(null,?,null,?,?,null,?,?,?,?,?,?,?,?)";
+        Integer row = null;
+        try {
+            row = qr.update(sql,categoryId,name,subtitle,mainImage,subImages,detail,price,stock,status,TimeStampUtil.getTimestamp(),TimeStampUtil.getTimestamp());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    public Integer updateAll(Integer categoryId, String name, String subtitle, String mainImage, String subImages,
+                             String detail, BigDecimal price, String stock, Integer status, Integer id) {
+        String sql = "update products set categoryId=?, name=?, subtitle=?, mainImage=?, subImages=?, " +
+                     " detail=?, price=?, stock=?, status=?, updateTime=? where id=?";
+        Integer row = null;
+        try {
+            row = qr.update(sql,categoryId,name,subtitle,mainImage,subImages,detail,price,stock,status,TimeStampUtil.getTimestamp(),id);
         } catch (SQLException e) {
             e.printStackTrace();
         }

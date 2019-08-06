@@ -28,6 +28,7 @@ public class Demo {
     }
     @Test
     public void m2(){
-
+        //异常
+        System.out.println(Integer.parseInt(""));
     }
 }

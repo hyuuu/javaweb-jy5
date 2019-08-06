@@ -36,9 +36,39 @@ public class ProductsController extends HttpServlet {
             case "set_sale_status":
                 rc = set_sale_statusDo(request);
                 break;
+            case "save":
+                rc = saveDo(request);
+                break;
         }
         //5、返回响应数据
         response.getWriter().write(rc.toString());
+    }
+
+    private ResponseCode saveDo(HttpServletRequest request) {
+        ResponseCode rc = new ResponseCode();
+        String categoryId = request.getParameter("categoryId");
+        String name = request.getParameter("name");
+        String subtitle = request.getParameter("subtitle");
+        String mainImage = request.getParameter("mainImage");
+        String subImages = request.getParameter("subImages");
+        String detail = request.getParameter("detail");
+        String price = request.getParameter("price");
+        String stock = request.getParameter("stock");
+        String status = request.getParameter("status");
+        String id = request.getParameter("id");
+        rc = ps.save(
+                categoryId,
+                name,
+                subtitle,
+                mainImage,
+                subImages,
+                detail,
+                price,
+                stock,
+                status,
+                id
+                );
+        return rc;
     }
 
     //产品上下架

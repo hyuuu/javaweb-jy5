@@ -31,10 +31,10 @@ public class UsersController extends HttpServlet {
         //4、什么样的请求进什么样的路线
         switch (path){
             case "list":
-                rc = listDo(request);
+                rc = listDo(request,response);
                 break;
             case "login":
-                rc = loginDo(request);
+                rc = loginDo(request,response);
                 break;
             case "disableUser":
                 rc = disableUserDo(request);
@@ -63,15 +63,25 @@ public class UsersController extends HttpServlet {
         return rc;
     }
 
-    private ResponseCode listDo(HttpServletRequest request) {
+    private ResponseCode listDo(HttpServletRequest request,HttpServletResponse response) {
         ResponseCode rc = new ResponseCode();
         String pageNum = request.getParameter("pageNum");   //页码
         String pageSize = request.getParameter("pageSize"); //一页数据量
         rc = us.selectAll(pageNum,pageSize);
+
+        request.setAttribute("uli",rc);
+        try {
+            request.getRequestDispatcher("/index.jsp").forward(request,response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return rc;
     }
 
-    private ResponseCode loginDo(HttpServletRequest request){
+    private ResponseCode loginDo(HttpServletRequest request,HttpServletResponse response){
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         ResponseCode rc = us.selectOne(username, password);
@@ -79,6 +89,12 @@ public class UsersController extends HttpServlet {
         //获取session，保存user信息
         HttpSession session = request.getSession();
         session.setAttribute("user",rc.getData());
+
+//        try {
+//            request.getRequestDispatcher("/index.jsp").forward(request,response);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         return rc;
     }

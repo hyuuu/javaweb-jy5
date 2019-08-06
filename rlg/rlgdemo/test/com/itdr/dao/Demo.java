@@ -46,8 +46,10 @@ public class Demo {
         System.out.println("-----a-----"+a);
         long ll = Long.parseLong(a);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        System.out.println(sdf.format(ll));
+        System.out.println(sdf.format(1485158676346L));
 
+
+        System.out.println(new Timestamp(1485158676L));
 
     }
     @Test
