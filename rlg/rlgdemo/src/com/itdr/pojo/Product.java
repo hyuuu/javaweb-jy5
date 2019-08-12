@@ -137,23 +137,23 @@ public class Product {
         this.updateTime = updateTime;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", categoryId=" + categoryId +
-                ", parentCategoryId=" + parentCategoryId +
-                ", name='" + name + '\'' +
-                ", subtitle='" + subtitle + '\'' +
-                ", imageHost='" + imageHost + '\'' +
-                ", mainImage='" + mainImage + '\'' +
-                ", subImages='" + subImages + '\'' +
-                ", detail='" + detail + '\'' +
-                ", price=" + price +
-                ", stock='" + stock + '\'' +
-                ", status=" + status +
-                ", createTime='" + createTime + '\'' +
-                ", updateTime='" + updateTime + '\'' +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "{" +
+//                "id:" + id +
+//                ", categoryId:" + categoryId +
+//                ", parentCategoryId:" + parentCategoryId +
+//                ", name:'" + name + '\'' +
+//                ", subtitle:'" + subtitle + '\'' +
+//                ", imageHost:'" + imageHost + '\'' +
+//                ", mainImage:'" + mainImage + '\'' +
+//                ", subImages:'" + subImages + '\'' +
+//                ", detail:'" + detail + '\'' +
+//                ", price:" + price +
+//                ", stock:'" + stock + '\'' +
+//                ", status:" + status +
+//                ", createTime:'" + createTime + '\'' +
+//                ", updateTime:'" + updateTime + '\'' +
+//                '}';
+//    }
 }

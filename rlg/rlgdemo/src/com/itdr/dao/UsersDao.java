@@ -75,4 +75,15 @@ public class UsersDao {
         }
         return row;
     }
+
+    public User selectByName(String username) {
+        String sql = "select * from users where username = ?";
+        User user = null;
+        try {
+            user = qr.query(sql,new BeanHandler<User>(User.class),username);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
 }

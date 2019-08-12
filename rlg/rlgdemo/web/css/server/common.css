@@ -1,0 +1,184 @@
+@import url("../../font-awesome-4.7.0/css/font-awesome.css");
+hr{
+	margin: 0;
+}
+.layui-icon{
+	font-size: 22px;
+}
+body>div.container:first-of-type{
+	background: #2B3A51;
+	width: 100%;
+	z-index: 20;
+	position: fixed;
+}
+/*--顶部--*/
+.Top-nav{
+	height: 40px;
+	color: #FFFFFF;
+	box-shadow: 1px 0 1px rgba(255,255,255,.5);
+	/* border: 1px solid rgba(255,255,255,.5);
+	border-left: none;
+	border-right: none; */
+}
+.Top-nav i.layui-icon{
+	height: 100%;
+	margin: 0 10px;
+	padding: 0 5px;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+}
+/* 上左 */
+.T-left{
+	height: 100%;
+	display: flex;
+	align-items: center;
+}
+.T-left>div{
+	width: 220px;
+	height: 100%;
+	font-size: 22px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.T-left>i.layui-icon{
+	height: auto;
+	background: rgba(255,255,255,.1);
+	border-radius: 3px;
+	transition: background-color .3s;
+}
+.T-left>i.layui-icon:hover{
+	background: rgba(255,255,255,.3);
+}
+/* 上右 */
+.T-right{
+	height: 100%;
+}
+.T-right>div{
+	height: 100%;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+#adminName{
+	height: 100%;
+	display: flex;
+	align-items: center;
+	padding: 0 5px;
+	cursor: pointer;
+	position: relative;
+	transition: all .3s;
+}
+#adminName:hover{
+	background: rgba(255,255,255,.3);
+}
+#adminName:hover dl{
+	visibility: visible;
+	top: 40px;
+	opacity: 1;
+}
+#adminName>i.layui-icon{
+	padding: 0;
+	margin: 0;
+	/* 上三角 */
+	/* transform: rotate(180deg); */
+}
+#adminName dl{
+	position: absolute;
+	left: 0;
+	top: 80px;
+	background: #FFFFFF;
+	padding: 4px 0;
+	box-shadow: 0 0 1px rgba(0,0,0,.3);
+	color: #000000;
+	transition: all .3s;
+	visibility: hidden;
+	opacity: 0;
+}
+#adminName dl dd{
+	display: block;
+	width: 100%;
+	padding: 4px 9px;
+	transition: background-color .3s;
+}
+#adminName dl dd:hover{
+	background: #2B3A51;
+	color: #FFFFFF;
+}
+#adminName dl hr{
+	margin: 2px 0;
+}
+
+
+
+/* 左边导航 */
+.Left-nav{
+	width: 220px;
+	height: 100%;
+	background: #2B3A51;
+	margin: 0;
+	position: fixed;
+	left: 0;
+	top: 0;
+	color: #FFFFFF;
+}
+.Left-nav .row:hover{
+	cursor: pointer;
+}
+.L-nav-list{
+	font-size: 16px;
+	border-bottom: 1px solid rgba(255,255,255,.1);
+}
+.L-show{
+	padding: 8px 0 8px 15px;
+	position: relative;
+}
+.L-show .i-left{
+	margin-right: 10px;
+	transition: color .3s;
+}
+.L-show:hover .i-left{
+	color: #EF4B4C;
+}
+.L-show .i-right{
+	position: absolute;
+	right: 20px;
+	top: 11px;
+}
+.L-hidden{
+	background: rgba(0,0,0,.3);
+}
+.L-hidden li{
+	height: 35px;
+	line-height: 35px;
+	padding: 0px 0 0px 37px;
+	transition: background .3s;
+	display: none;
+}
+.L-hidden li:hover{
+	background: rgba(255,255,255,.3);
+}
+.clicked{
+	background: rgba(255,255,255,.3);
+}
+/*--顶部结束--*/
+
+/* 覆盖Top-nav的logo */
+.logo{
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 22px;
+	box-shadow: 0 1px 1px -1px rgba(255,255,255,.5);
+}
+/* 
+.context{
+	width: 100%;
+	padding-left: 220px;
+	padding-top: 40px;
+	box-sizing: border-box;
+	background: #e9e9eb;
+}
+ */

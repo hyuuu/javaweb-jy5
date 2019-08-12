@@ -24,7 +24,8 @@ public class ProductsDao {
     private QueryRunner qr = PoolUtil.getQR();
 
     public List<Product> selectAll(Integer page, Integer size) {
-        String sql = "select id,categoryId,name,subtitle,mainImage,status,price from products limit ?,?";
+//        String sql = "select id,categoryId,name,subtitle,mainImage,status,price from products limit ?,?";
+        String sql = "select * from products limit ?,?";
         List<Product> li = null;
         try {
             li = qr.query(sql, new BeanListHandler<Product>(Product.class),page,size);
@@ -91,5 +92,16 @@ public class ProductsDao {
             e.printStackTrace();
         }
         return row;
+    }
+    public List<Product> selectLikeKeyWork(String keyWork,Integer page,Integer size) {
+        String sql = "select * from products where name like ? limit ?, ?";
+        keyWork = "%"+keyWork+"%";
+        List<Product> product = null;
+        try {
+            product = qr.query(sql,new BeanListHandler<Product>(Product.class),keyWork,page,size);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return product;
     }
 }

@@ -37,7 +37,7 @@ public class OrderService {
 
     public ResponseCode list(String pageNum,String pageSize) {
         ResponseCode rc = null;
-        if (pageNum==null || pageNum.equals("")){pageNum = "1";}
+        if (pageNum==null || pageNum.equals("")){pageNum = "0";}
         if (pageSize==null || pageSize.equals("")){pageSize = "10";}
         Integer page = null;
         Integer size = null;

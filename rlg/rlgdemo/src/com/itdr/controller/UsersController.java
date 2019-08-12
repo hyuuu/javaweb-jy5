@@ -3,6 +3,7 @@ package com.itdr.controller;
 import com.itdr.common.ResponseCode;
 import com.itdr.pojo.User;
 import com.itdr.service.UsersService;
+import com.itdr.utils.JsonUtils;
 import com.itdr.utils.PathUtil;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,6 +29,9 @@ public class UsersController extends HttpServlet {
         ResponseCode rc = null;
         //3、请求地址拆分，辨别请求
         String path = PathUtil.getPath(request.getPathInfo());
+
+        System.out.println("2--控制器："+path);
+
         //4、什么样的请求进什么样的路线
         switch (path){
             case "list":
@@ -42,9 +46,37 @@ public class UsersController extends HttpServlet {
             case "enableUser":
                 rc = enableUserDo(request);
                 break;
+            case "yz":
+                yzDo(request,response);
+                break;
+            case "checkStatus":
+                rc = checkStatusDo(request);
+                break;
         }
         //5、返回响应数据
-        response.getWriter().write(rc.toString());
+        System.out.println("3--响应的Data："+rc.getData());
+
+        response.setContentType("text/json;charset=utf-8");
+        response.getWriter().write(JsonUtils.obj2String(rc));
+    }
+
+    //查看用户状态:status
+    private ResponseCode checkStatusDo(HttpServletRequest request) {
+        ResponseCode rc = new ResponseCode();
+        String id = request.getParameter("id");
+        rc = us.checkStatusByID(id);
+        return rc;
+    }
+
+    private void yzDo(HttpServletRequest request, HttpServletResponse response) {
+        String username = request.getParameter("username");
+        System.out.println(username);
+        boolean u = us.yanzheng(username);
+        try {
+            response.getWriter().write(String.valueOf(u));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private ResponseCode enableUserDo(HttpServletRequest request) {
@@ -69,14 +101,14 @@ public class UsersController extends HttpServlet {
         String pageSize = request.getParameter("pageSize"); //一页数据量
         rc = us.selectAll(pageNum,pageSize);
 
-        request.setAttribute("uli",rc);
-        try {
-            request.getRequestDispatcher("/index.jsp").forward(request,response);
-        } catch (ServletException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        request.setAttribute("uli",rc);
+//        try {
+//            request.getRequestDispatcher("/index.jsp").forward(request,response);
+//        } catch (ServletException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         return rc;
     }
@@ -89,12 +121,6 @@ public class UsersController extends HttpServlet {
         //获取session，保存user信息
         HttpSession session = request.getSession();
         session.setAttribute("user",rc.getData());
-
-//        try {
-//            request.getRequestDispatcher("/index.jsp").forward(request,response);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
 
         return rc;
     }

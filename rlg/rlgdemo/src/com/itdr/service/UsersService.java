@@ -4,6 +4,7 @@ import com.itdr.common.ResponseCode;
 import com.itdr.dao.UsersDao;
 import com.itdr.pojo.User;
 import com.itdr.utils.GetPropertiesUtil;
+import com.itdr.utils.TimeStampUtil;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class UsersService {
         //创建一个统一返回对象
         ResponseCode<Object> rc = null;
         //1、页码和一页数据量非空判断，若空则初始化
-        if (pageNum==null || pageNum.equals("")){pageNum = "1";}
+        if (pageNum==null || pageNum.equals("")){pageNum = "0";}
         if (pageSize==null || pageSize.equals("")){pageSize = "10";}
         //2、字符串转数值
         Integer page = null;
@@ -48,6 +49,10 @@ public class UsersService {
             return rc;
         }
         //6、查询结果集有数据
+        for (User u : uli) {
+            u.setCreateTime(TimeStampUtil.getTime(u.getCreateTime()));
+            u.setUpdateTime(TimeStampUtil.getTime(u.getUpdateTime()));
+        }
         rc = ResponseCode.success(uli);
         return rc;
     }
@@ -67,15 +72,19 @@ public class UsersService {
             rc = ResponseCode.fail(GetPropertiesUtil.getValue("LOGIN_ERROR_CODE"), GetPropertiesUtil.getValue("LOGIN_ERROR_MSG"));
             return rc;
         }
-        //5、如果这个人权限不足（非管理员）
-        if (u.getRole() != 1) {
+
+        if (u.getRole() ==1 || u.getRole() ==2) {
+            //6、这个人是管理员
+            rc = ResponseCode.success(u);
+            //7、返回
+            return rc;
+
+        }else {
+            //5、如果这个人权限不足（非管理员）
             rc = ResponseCode.fail(GetPropertiesUtil.getValue("LOGIN_DENIED_CODE"), GetPropertiesUtil.getValue("LOGIN_DENIED_MSG"));
             return rc;
         }
-        //6、这个人是管理员
-        rc = ResponseCode.success(u);
-        //7、返回
-        return rc;
+
     }
 
     public ResponseCode disableUserByID(String id) {
@@ -146,5 +155,40 @@ public class UsersService {
         //8.成功
         rc = ResponseCode.success(row);
         return rc;
+    }
+
+    public boolean yanzheng(String username) {
+        boolean res = false;
+        if (username == null || username.equals("")) {
+
+        }
+        User user = ud.selectByName(username);
+        if ( user != null ){
+            res = true;
+        }
+        return res;
+    }
+
+    public ResponseCode checkStatusByID(String id) {
+        ResponseCode rc = null;
+        Integer uid = null;
+        try {
+            uid = Integer.parseInt(id);
+        }catch (Exception e){
+            rc = ResponseCode.fail(GetPropertiesUtil.getValue("PARAMETER_ILLICIT_CODE"), GetPropertiesUtil.getValue("PARAMETER_ILLICIT_MSG"));
+            return rc;
+        }
+        User user = ud.selectByID(uid);
+        if (user == null){
+            rc = ResponseCode.fail(GetPropertiesUtil.getValue("SELECT_NULL_CODE"), GetPropertiesUtil.getValue("SELECT_NULL_MSG"));
+            return rc;
+        }
+        if (user.getStatus() != 0){
+            rc = ResponseCode.fail(GetPropertiesUtil.getValue("USER_STATS_CODE"), GetPropertiesUtil.getValue("USER_STATS_MSG"));
+            return rc;
+        }else {
+            rc = ResponseCode.success(user);
+            return rc;
+        }
     }
 }

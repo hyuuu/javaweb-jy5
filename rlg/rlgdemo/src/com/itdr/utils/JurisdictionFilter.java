@@ -22,11 +22,15 @@ public class JurisdictionFilter implements Filter {
         //统一乱码解决
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html;charset=UTF-8");
+
+        System.out.println("1--过滤器");
+
+
         //向下转型
         HttpServletRequest request = (HttpServletRequest) req;
         //获得请求路径，如果是登录请求就直接放行
         String pathInfo = request.getPathInfo();
-        if (pathInfo.equals("/login.do")){
+        if (pathInfo.equals("/login.do") || pathInfo.equals("/yz.do")){
             chain.doFilter(req, resp);
             return;
         }
@@ -38,19 +42,21 @@ public class JurisdictionFilter implements Filter {
             ResponseCode rc = new ResponseCode();
             rc.setStatus(GetPropertiesUtil.getValue("LOGIN_NOT_CODE"));
             rc.setMsg(GetPropertiesUtil.getValue("LOGIN_NOT_MSG"));
-            resp.getWriter().write(rc.toString());
+            resp.getWriter().write(JsonUtils.obj2String(rc));
             return;
         }
         //权限不足状态
-        if (user.getRole() != 1){
+        if (user.getRole() == 1 || user.getRole() == 2){
+            //正常状态
+            chain.doFilter(req, resp);
+        }else {
             ResponseCode rc = new ResponseCode();
             rc.setStatus(GetPropertiesUtil.getValue("LOGIN_DENIED_CODE"));
             rc.setMsg(GetPropertiesUtil.getValue("LOGIN_DENIED_MSG"));
-            resp.getWriter().write(rc.toString());
+            resp.getWriter().write(JsonUtils.obj2String(rc));
             return;
         }
-        //正常状态
-        chain.doFilter(req, resp);
+
     }
 
     public void init(FilterConfig config) throws ServletException {

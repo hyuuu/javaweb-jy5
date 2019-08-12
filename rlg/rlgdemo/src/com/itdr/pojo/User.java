@@ -108,20 +108,20 @@ public class User {
         this.updateTime = updateTime;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", question='" + question + '\'' +
-                ", answer='" + answer + '\'' +
-                ", role=" + role +
-                ", status=" + status +
-                ", createTime='" + createTime + '\'' +
-                ", updateTime='" + updateTime + '\'' +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "{" +
+//                "id:" + id +
+//                ", username:'" + username + '\'' +
+//                ", password:'" + password + '\'' +
+//                ", email:'" + email + '\'' +
+//                ", phone:'" + phone + '\'' +
+//                ", question:'" + question + '\'' +
+//                ", answer:'" + answer + '\'' +
+//                ", role:" + role +
+//                ", status:" + status +
+//                ", createTime:'" + createTime + '\'' +
+//                ", updateTime:'" + updateTime + '\'' +
+//                '}';
+//    }
 }

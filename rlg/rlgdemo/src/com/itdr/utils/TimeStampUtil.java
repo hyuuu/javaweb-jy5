@@ -11,16 +11,20 @@ import java.util.Date;
  * @description:
  */
 public class TimeStampUtil {
-    private static Date date = new Date();
     public static String getTimestamp(){
-        long ts = date.getTime();
+        long ts = new Date().getTime();
         String timestamp = ts+"";
         timestamp = timestamp.substring(0,10);
         timestamp = timestamp+"000";
         return timestamp;
     }
     public static String getTime(String timestamp){
-        long l = Long.parseLong(timestamp);
+        Long l = null;
+        try {
+            l = Long.parseLong(timestamp);
+        }catch (Exception e){
+            return "时间戳非法！";
+        }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String format = sdf.format(l);
         return format;

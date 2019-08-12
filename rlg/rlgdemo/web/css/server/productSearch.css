@@ -1,0 +1,29 @@
+.table{
+    border-bottom: 1px solid #ddd;
+}
+.table-responsive{
+    margin: 10px;
+}
+#productSearch>.form-inline>.form-group{
+    position: relative;
+}
+#productSearch>.form-inline>.form-group>.form-control{
+    border-radius: 4px 4px 0 0;
+}
+#showSearch{
+    position: absolute;
+    top: 35px;
+    width: 100%;
+    background: #FFFFFF;
+    border: 1px solid #e0e0e0;
+    border-radius: 0 0 4px 4px;
+    display: none;
+}
+#showSearch .table{
+    margin: 0;
+    border: none;
+}
+#showSearch .table td{
+    padding: 4px;
+    border: none;
+}

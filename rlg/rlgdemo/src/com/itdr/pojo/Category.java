@@ -73,16 +73,16 @@ public class Category {
         this.updateTime = updateTime;
     }
 
-    @Override
-    public String toString() {
-        return "category{" +
-                "id=" + id +
-                ", parentId=" + parentId +
-                ", name='" + name + '\'' +
-                ", status=" + status +
-                ", sortOrder=" + sortOrder +
-                ", createTime='" + createTime + '\'' +
-                ", updateTime='" + updateTime + '\'' +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "{" +
+//                "id:" + id +
+//                ", parentId:" + parentId +
+//                ", name:'" + name + '\'' +
+//                ", status:" + status +
+//                ", sortOrder:" + sortOrder +
+//                ", createTime:'" + createTime + '\'' +
+//                ", updateTime:'" + updateTime + '\'' +
+//                '}';
+//    }
 }

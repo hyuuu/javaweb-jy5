@@ -166,26 +166,26 @@ public class Order {
         this.shippingVo = shippingVo;
     }
 
-    @Override
-    public String toString() {
-        return "Order{" +
-                "orderNo='" + orderNo + '\'' +
-                ", payment=" + payment +
-                ", paymentType=" + paymentType +
-                ", paymentTypeDesc='" + paymentTypeDesc + '\'' +
-                ", postage=" + postage +
-                ", status=" + status +
-                ", statusDesc='" + statusDesc + '\'' +
-                ", paymentTime='" + paymentTime + '\'' +
-                ", sendTime='" + sendTime + '\'' +
-                ", endTime='" + endTime + '\'' +
-                ", closeTime='" + closeTime + '\'' +
-                ", createTime='" + createTime + '\'' +
-                ", orderItemVoList=" + orderItemVoList +
-                ", imageHost='" + imageHost + '\'' +
-                ", shippingId=" + shippingId +
-                ", receiverName='" + receiverName + '\'' +
-                ", shippingVo=" + shippingVo +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "{" +
+//                "orderNo:'" + orderNo + '\'' +
+//                ", payment:" + payment +
+//                ", paymentType:" + paymentType +
+//                ", paymentTypeDesc:'" + paymentTypeDesc + '\'' +
+//                ", postage:" + postage +
+//                ", status:" + status +
+//                ", statusDesc:'" + statusDesc + '\'' +
+//                ", paymentTime:'" + paymentTime + '\'' +
+//                ", sendTime:'" + sendTime + '\'' +
+//                ", endTime:'" + endTime + '\'' +
+//                ", closeTime:'" + closeTime + '\'' +
+//                ", createTime:'" + createTime + '\'' +
+//                ", orderItemVoList:" + orderItemVoList +
+//                ", imageHost:'" + imageHost + '\'' +
+//                ", shippingId:" + shippingId +
+//                ", receiverName:'" + receiverName + '\'' +
+//                ", shippingVo:" + shippingVo +
+//                '}';
+//    }
 }
